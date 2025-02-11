@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluate Model</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-4">Evaluate Action Recognition Model</h1>
+        <form method="post" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div id="video-inputs" class="mb-4">
+                <div class="mb-2">
+                    <input type="file" name="video_paths" accept=".mp4,.avi,.mov" class="mb-1">
+                    <input type="text" name="ground_truth" placeholder="Ground Truth Label" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+            </div>
+            <button type="button" id="add-video" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4">
+                Add Another Video
+            </button>
+            <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    Evaluate Model
+                </button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById('add-video').addEventListener('click', function() {
+            const videoInputs = document.getElementById('video-inputs');
+            const newInput = document.createElement('div');
+            newInput.className = 'mb-2';
+            newInput.innerHTML = `
+                <input type="file" name="video_paths" accept=".mp4,.avi,.mov" class="mb-1">
+                <input type="text" name="ground_truth" placeholder="Ground Truth Label" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            `;
+            videoInputs.appendChild(newInput);
+        });
+    </script>
+</body>
+</html>

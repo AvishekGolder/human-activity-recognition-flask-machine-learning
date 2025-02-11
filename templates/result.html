@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action Recognition Result</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #333; }
+        .result { background-color: #f0f0f0; padding: 20px; border-radius: 5px; margin-top: 20px; }
+        .action { font-weight: bold; color: #4CAF50; }
+        .confidence { color: #666; }
+        a { display: inline-block; margin-top: 20px; background-color: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; }
+        a:hover { background-color: #45a049; }
+        video { width: 100%; max-width: 640px; margin-top: 20px; }
+        .download-btn { background-color: #3498db; margin-left: 10px; }
+        .download-btn:hover { background-color: #2980b9; }
+    </style>
+</head>
+<body>
+    <h1>Action Recognition Result</h1>
+    <div class="result">
+        <p>Detected Action: <span class="action">{{ prediction[0] }}</span></p>
+        <p>Confidence: <span class="confidence">{{ (prediction[1] * 100) if (prediction[1] * 100) < 100 else 100 | round(2) }}%</span></p>
+    </div>
+    <h2>Analyzed Video:</h2>
+    <video controls>
+        <source src="{{ url_for('uploaded_file', filename=video_filename) }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <br>
+    <a href="{{ url_for('upload_file') }}">Analyze Another Video</a>
+    <a href="{{ url_for('uploaded_file', filename=video_filename) }}" download class="download-btn">Download Video</a>
+</body>
+</html>

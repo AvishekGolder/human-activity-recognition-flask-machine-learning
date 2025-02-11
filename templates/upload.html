@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action Recognition Upload</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        h1 { color: #333; }
+        form { margin-top: 20px; }
+        input[type="file"] { margin-bottom: 10px; }
+        input[type="submit"] { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; cursor: pointer; }
+        input[type="submit"]:hover { background-color: #45a049; }
+        #loading { display: none; text-align: center; margin-top: 20px; }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .file-info { margin-top: 10px; color: #666; }
+    </style>
+</head>
+<body>
+    <h1>Upload Video for Action Recognition</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form method="post" enctype="multipart/form-data" id="upload-form">
+        <input type="file" name="file" accept=".mp4,.avi,.mov" required>
+        <div class="file-info">Supported formats: .mp4, .avi, .mov</div>
+        <input type="submit" value="Upload and Analyze">
+    </form>
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>Analyzing video... Please wait.</p>
+    </div>
+
+    <script>
+        document.getElementById('upload-form').onsubmit = function() {
+            const fileInput = document.querySelector('input[type="file"]');
+            if (fileInput.files.length > 0 && fileInput.files[0].size > 100 * 1024 * 1024) { // 100MB limit
+                alert('File size must be less than 100MB.');
+                return false;
+            }
+            document.getElementById('loading').style.display = 'block';
+        };
+    </script>
+</body>
+</html>
